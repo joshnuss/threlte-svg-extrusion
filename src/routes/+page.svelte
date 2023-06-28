@@ -1,41 +1,30 @@
 <script>
-  import { Canvas, InteractiveObject, OrbitControls, T } from '@threlte/core'
-  import { spring } from 'svelte/motion'
+  import { Canvas, OrbitControls, T } from '@threlte/core'
   import { degToRad } from 'three/src/math/MathUtils'
+  import SvgExtrusion from './SvgExtrusion.svelte'
 
-  const scale = spring(1)
+  let material
 </script>
 
 <div>
   <Canvas>
-    <T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={24}>
-      <OrbitControls maxPolarAngle={degToRad(80)} enableZoom={false} target={{ y: 0.5 }} />
+    <T.PerspectiveCamera makeDefault position={[70, 70, 70]} fov={24}>
+      <OrbitControls maxPolarAngle={degToRad(80)} enableZoom={true} target={{ y: 0.5 }} />
     </T.PerspectiveCamera>
 
     <T.DirectionalLight castShadow position={[3, 10, 10]} />
     <T.DirectionalLight position={[-3, 10, -10]} intensity={0.2} />
     <T.AmbientLight intensity={0.2} />
 
-    <!-- Cube -->
-    <T.Group scale={$scale}>
-      <T.Mesh position.y={0.5} castShadow let:ref>
-        <!-- Add interaction -->
-        <InteractiveObject
-          object={ref}
-          interactive
-          on:pointerenter={() => ($scale = 2)}
-          on:pointerleave={() => ($scale = 1)}
-        />
+    <T.MeshBasicMaterial color="purple" reflectivity={0.5}  bind:ref={material}/>
 
-        <T.BoxGeometry />
-        <T.MeshStandardMaterial color="#333333" />
-      </T.Mesh>
-    </T.Group>
-
-    <!-- Floor -->
-    <T.Mesh receiveShadow rotation.x={degToRad(-90)}>
-      <T.CircleGeometry args={[3, 72]} />
-      <T.MeshStandardMaterial color="white" />
+    <T.Mesh>
+      <SvgExtrusion depth=1 {material}>
+        <svg viewBox="0 0 20 20">
+          <rect x=0 y=0 width=5 height=5 rx=0.5 />
+          <circle cx=10 cy=10 r=5 />
+        </svg>
+      </SvgExtrusion>
     </T.Mesh>
   </Canvas>
 </div>

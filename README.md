@@ -1,38 +1,27 @@
-# create-svelte
+# Threlte SVG Extrusions
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This is an experiment to use SVG to create parametric 3D shapes.
 
-## Creating a project
+## Usage
 
-If you're seeing this, you've probably already done this step. Congrats!
+```html
+<script>
+  import { Canvas, OrbitControls, T } from '@threlte/core'
+  import { degToRad } from 'three/src/math/MathUtils'
+  import SvgExtrusion from './SvgExtrusion.svelte'
+</script>
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+<Canvas>
+  <T.PerspectiveCamera .../>
+  <T.DirectionalLight ... />
+  <T.AmbientLight ... />
 
-# create a new project in my-app
-npm create svelte@latest my-app
+  <!-- Extrude an SVG to 3D!! -->
+  <SvgExtrusion depth=1>
+    <svg viewBox="0 0 20 20">
+      <rect x=0 y=0 width=5 height=5 rx=0.5 />
+      <circle cx=10 cy=10 r=5 />
+    </svg>
+  </SvgExtrusion>
+</Canvas>
 ```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

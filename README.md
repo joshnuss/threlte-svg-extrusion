@@ -6,8 +6,7 @@ This is an experiment to use SVG to create parametric 3D shapes.
 
 ```html
 <script>
-  import { Canvas, OrbitControls, T } from '@threlte/core'
-  import { degToRad } from 'three/src/math/MathUtils'
+  import { Canvas, T } from '@threlte/core'
   import SvgExtrusion from './SvgExtrusion.svelte'
 </script>
 
